@@ -11,12 +11,16 @@
     <url>http://littleproxy.org</url>
 
     <properties>
+    	<java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
         <github.global.server>github</github.global.server>
-        <netty.version>4.0.44.Final</netty.version>
-        <slf4j.version>1.7.24</slf4j.version>
-        <java.version>1.7</java.version>
+        
+        <netty.version>4.1.11.Final</netty.version>
+        <slf4j.version>1.7.25</slf4j.version>
+       	<logback.version>1.2.3</logback.version>
+        
     </properties>
 
     <organization>
@@ -177,7 +181,7 @@
         <profile>
             <id>netty-4.1</id>
             <properties>
-                <netty.version>4.1.8.Final</netty.version>
+                <netty.version>4.1.11.Final</netty.version>
             </properties>
         </profile>
     </profiles>
@@ -186,13 +190,13 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>20.0</version>
+            <version>22.0</version>
         </dependency>
 
         <dependency>
             <groupId>commons-cli</groupId>
             <artifactId>commons-cli</artifactId>
-            <version>1.3.1</version>
+            <version>1.4</version>
             <!-- Only required when running as a standalone jar -->
             <optional>true</optional>
         </dependency>
@@ -265,13 +269,6 @@
         </dependency>
 
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.3</version>
@@ -299,6 +296,14 @@
                     <groupId>org.littleshoot</groupId>
                     <artifactId>dnsjava</artifactId>
                 </exclusion>
+                <exclusion>
+                	<groupId>org.slf4j</groupId>
+                	<artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                	<groupId>log4j</groupId>
+                	<artifactId>log4j</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -309,18 +314,19 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-            <optional>true</optional>
-        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			 <optional>true</optional>
+		</dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			 <optional>true</optional>
+		</dependency>
 
         <!-- Test dependencies -->
         <dependency>
@@ -410,6 +416,16 @@
     </prerequisites>
 
     <build>
+    	<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/filters/${env}</directory>
+			</resource>
+		</resources>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -540,10 +556,7 @@
                                         <Main-Class>org.littleshoot.proxy.Launcher</Main-Class>
                                     </manifestEntries>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                                    <resource>log4j.xml</resource>
-                                    <file>src/main/config/log4j.xml</file>
-                                </transformer>
+
                             </transformers>
                         </configuration>
                     </execution>

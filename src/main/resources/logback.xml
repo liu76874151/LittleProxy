@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<contextName>proxy server</contextName>
+
+	<property name="logFilePath" value="/apps/logs/proxy"/>
+	<property name="logFileName" value="proxy.log"/>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[proxy] %date [%thread] [%-5level] [%logger{30}] &gt;&gt;&gt; %m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${logFilePath}/${logFileName}</File>
+		<encoder>
+			<pattern>[%date] [%thread] [%-5level] [%logger{80}] &gt;&gt;&gt; %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logFilePath}/${logFileName}.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<!-- 一周的日志滚动 -->
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="org.apache" additivity="false" level="ERROR" />
+	<logger name="org.quartz" additivity="false" level="ERROR" />
+	<logger name="com.google" additivity="false" level="ERROR" />
+	<logger name="net.sf" additivity="false" level="ERROR" />
+	<logger name="org.jasig.cas" additivity="false" level="ERROR" />
+	<logger name="org.hibernate" additivity="false" level="ERROR" />
+	<logger name="com.opensymphony" additivity="false" level="ERROR" />
+	<logger name="com.mongodb" additivity="false" level="ERROR" />
+	<logger name="org.springframework" additivity="false" level="ERROR" />
+	<logger name="kafka" additivity="false" level="ERROR" />
+	<logger name="httpclient.wire.content" additivity="false" level="ERROR" />
+	<logger name="httpclient.wire.header" additivity="false" level="ERROR" />
+	<logger name="net.rubyeye.xmemcached" additivity="false" level="ERROR" />
+	<logger name="com.zaxxer.hikari" additivity="false" level="ERROR" />
+
+	<root level="debug">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
