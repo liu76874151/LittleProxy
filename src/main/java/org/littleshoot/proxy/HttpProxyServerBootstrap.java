@@ -1,14 +1,12 @@
 package org.littleshoot.proxy;
 
-import org.littleshoot.proxy.impl.ThreadPoolConfiguration;
-
 import java.net.InetSocketAddress;
 
+import org.littleshoot.proxy.impl.ThreadPoolConfiguration;
+
 /**
- * Configures and starts an {@link HttpProxyServer}. The HttpProxyServer is
- * built using {@link #start()}. Sensible defaults are available for all
- * parameters such that {@link #start()} could be called immediately if you
- * wish.
+ * Configures and starts an {@link HttpProxyServer}. The HttpProxyServer is built using {@link #start()}. Sensible
+ * defaults are available for all parameters such that {@link #start()} could be called immediately if you wish.
  */
 public interface HttpProxyServerBootstrap {
 
@@ -85,16 +83,16 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * This method has no effect and will be removed in a future release.
+     * 
      * @deprecated use {@link #withNetworkInterface(InetSocketAddress)} to avoid listening on all local addresses
      */
-    @Deprecated
-    HttpProxyServerBootstrap withListenOnAllAddresses(boolean listenOnAllAddresses);
+//    @Deprecated
+//   HttpProxyServerBootstrap withListenOnAllAddresses(boolean listenOnAllAddresses);
 
     /**
      * <p>
-     * Specify an {@link SslEngineSource} to use for encrypting inbound
-     * connections. Enabling this will enable SSL client authentication
-     * by default (see {@link #withAuthenticateSslClients(boolean)})
+     * Specify an {@link SslEngineSource} to use for encrypting inbound connections. Enabling this will enable SSL
+     * client authentication by default (see {@link #withAuthenticateSslClients(boolean)})
      * </p>
      * 
      * <p>
@@ -102,8 +100,7 @@ public interface HttpProxyServerBootstrap {
      * </p>
      * 
      * <p>
-     * Note - This and {@link #withManInTheMiddle(MitmManager)} are
-     * mutually exclusive.
+     * Note - This and {@link #withManInTheMiddle(MitmManager)} are mutually exclusive.
      * </p>
      * 
      * @param sslEngineSource
@@ -114,8 +111,8 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
-     * Specify whether or not to authenticate inbound SSL clients (only applies
-     * if {@link #withSslEngineSource(SslEngineSource)} has been set).
+     * Specify whether or not to authenticate inbound SSL clients (only applies if
+     * {@link #withSslEngineSource(SslEngineSource)} has been set).
      * </p>
      * 
      * <p>
@@ -130,8 +127,7 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
-     * Specify a {@link ProxyAuthenticator} to use for doing basic HTTP
-     * authentication of clients.
+     * Specify a {@link ProxyAuthenticator} to use for doing basic HTTP authentication of clients.
      * </p>
      * 
      * <p>
@@ -146,8 +142,7 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
-     * Specify a {@link ChainedProxyManager} to use for chaining requests to
-     * another proxy.
+     * Specify a {@link ChainedProxyManager} to use for chaining requests to another proxy.
      * </p>
      * 
      * <p>
@@ -162,8 +157,7 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
-     * Specify an {@link MitmManager} to use for making this proxy act as an SSL
-     * man in the middle
+     * Specify an {@link MitmManager} to use for making this proxy act as an SSL man in the middle
      * </p>
      * 
      * <p>
@@ -171,8 +165,7 @@ public interface HttpProxyServerBootstrap {
      * </p>
      * 
      * <p>
-     * Note - This and {@link #withSslEngineSource(SslEngineSource)} are
-     * mutually exclusive.
+     * Note - This and {@link #withSslEngineSource(SslEngineSource)} are mutually exclusive.
      * </p>
      * 
      * @param mitmManager
@@ -183,8 +176,7 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
-     * Specify a {@link HttpFiltersSource} to use for filtering requests and/or
-     * responses through this proxy.
+     * Specify a {@link HttpFiltersSource} to use for filtering requests and/or responses through this proxy.
      * </p>
      * 
      * <p>
@@ -199,8 +191,7 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
-     * Specify whether or not to use secure DNS lookups for outbound
-     * connections.
+     * Specify whether or not to use secure DNS lookups for outbound connections.
      * </p>
      * 
      * <p>
@@ -230,8 +221,7 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
-     * Specify the timeout after which to disconnect idle connections, in
-     * seconds.
+     * Specify the timeout after which to disconnect idle connections, in seconds.
      * </p>
      * 
      * <p>
@@ -246,8 +236,7 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
-     * Specify the timeout for connecting to the upstream server on a new
-     * connection, in milliseconds.
+     * Specify the timeout for connecting to the upstream server on a new connection, in milliseconds.
      * </p>
      * 
      * <p>
@@ -282,6 +271,7 @@ public interface HttpProxyServerBootstrap {
      * <p>
      * Specify the read and/or write bandwidth throttles for this proxy server. 0 indicates not throttling.
      * </p>
+     * 
      * @param readThrottleBytesPerSecond
      * @param writeThrottleBytesPerSecond
      * @return
@@ -294,18 +284,19 @@ public interface HttpProxyServerBootstrap {
      * @param inetSocketAddress to be used for outgoing communication
      */
     HttpProxyServerBootstrap withNetworkInterface(InetSocketAddress inetSocketAddress);
-    
+
     HttpProxyServerBootstrap withMaxInitialLineLength(int maxInitialLineLength);
-    
+
     HttpProxyServerBootstrap withMaxHeaderSize(int maxHeaderSize);
-    
+
     HttpProxyServerBootstrap withMaxChunkSize(int maxChunkSize);
 
     /**
-     * When true, the proxy will accept requests that appear to be directed at an origin server (i.e. the URI in the HTTP
-     * request will contain an origin-form, rather than an absolute-form, as specified in RFC 7230, section 5.3).
+     * When true, the proxy will accept requests that appear to be directed at an origin server (i.e. the URI in the
+     * HTTP request will contain an origin-form, rather than an absolute-form, as specified in RFC 7230, section 5.3).
      * This is useful when the proxy is acting as a gateway/reverse proxy. <b>Note:</b> This feature should not be
-     * enabled when running as a forward proxy; doing so may cause an infinite loop if the client requests the URI of the proxy.
+     * enabled when running as a forward proxy; doing so may cause an infinite loop if the client requests the URI of
+     * the proxy.
      *
      * @param allowRequestToOriginServer when true, the proxy will accept origin-form HTTP requests
      */

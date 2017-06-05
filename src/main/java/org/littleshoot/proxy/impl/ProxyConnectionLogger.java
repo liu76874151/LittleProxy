@@ -9,32 +9,29 @@ import org.slf4j.spi.LocationAwareLogger;
 
 /**
  * <p>
- * A helper class that logs messages for ProxyConnections. All it does is make
- * sure that the Channel and current state are always included in the log
- * messages (if available).
+ * A helper class that logs messages for ProxyConnections. All it does is make sure that the Channel and current state
+ * are always included in the log messages (if available).
  * </p>
  *
  * <p>
- * Note that this depends on us using a LocationAwareLogger so that we can
- * report the line numbers of the caller rather than this helper class.
- * If the SLF4J binding does not provide a LocationAwareLogger, then a fallback
- * to Logger is provided.
+ * Note that this depends on us using a LocationAwareLogger so that we can report the line numbers of the caller rather
+ * than this helper class. If the SLF4J binding does not provide a LocationAwareLogger, then a fallback to Logger is
+ * provided.
  * </p>
  */
 class ProxyConnectionLogger {
-    private final ProxyConnection connection;
+    private final ProxyConnection<?> connection;
     private final LogDispatch dispatch;
     private final Logger logger;
     private final String fqcn = this.getClass().getCanonicalName();
 
-    public ProxyConnectionLogger(ProxyConnection connection) {
+    public ProxyConnectionLogger(ProxyConnection<?> connection) {
         this.connection = connection;
         final Logger lg = LoggerFactory.getLogger(connection
                 .getClass());
         if (lg instanceof LocationAwareLogger) {
             dispatch = new LocationAwareLogggerDispatch((LocationAwareLogger) lg);
-        }
-        else {
+        } else {
             dispatch = new LoggerDispatch();
         }
         logger = lg;
@@ -117,8 +114,7 @@ class ProxyConnectionLogger {
     }
 
     /**
-     * Fallback dispatch if a LocationAwareLogger is not available from
-     * the SLF4J LoggerFactory.
+     * Fallback dispatch if a LocationAwareLogger is not available from the SLF4J LoggerFactory.
      */
     private class LoggerDispatch implements LogDispatch {
         @Override
@@ -135,27 +131,26 @@ class ProxyConnectionLogger {
                     paramsWithThrowable = Arrays.copyOf(params, params.length + 1);
                     paramsWithThrowable[params.length] = t;
                 }
-            }
-            else {
+            } else {
                 paramsWithThrowable = params;
             }
             switch (level) {
-            case LocationAwareLogger.TRACE_INT:
-                logger.trace(formattedMessage, paramsWithThrowable);
-                break;
-            case LocationAwareLogger.DEBUG_INT:
-                logger.debug(formattedMessage, paramsWithThrowable);
-                break;
-            case LocationAwareLogger.INFO_INT:
-                logger.info(formattedMessage, paramsWithThrowable);
-                break;
-            case LocationAwareLogger.WARN_INT:
-                logger.warn(formattedMessage, paramsWithThrowable);
-                break;
-            case LocationAwareLogger.ERROR_INT:
-            default:
-                logger.error(formattedMessage, paramsWithThrowable);
-                break;
+                case LocationAwareLogger.TRACE_INT:
+                    logger.trace(formattedMessage, paramsWithThrowable);
+                    break;
+                case LocationAwareLogger.DEBUG_INT:
+                    logger.debug(formattedMessage, paramsWithThrowable);
+                    break;
+                case LocationAwareLogger.INFO_INT:
+                    logger.info(formattedMessage, paramsWithThrowable);
+                    break;
+                case LocationAwareLogger.WARN_INT:
+                    logger.warn(formattedMessage, paramsWithThrowable);
+                    break;
+                case LocationAwareLogger.ERROR_INT:
+                default:
+                    logger.error(formattedMessage, paramsWithThrowable);
+                    break;
             }
         }
     }

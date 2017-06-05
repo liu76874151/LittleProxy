@@ -13,11 +13,8 @@ abstract class ConnectionFlowStep {
     /**
      * Construct a new step in a connection flow.
      * 
-     * @param connection
-     *            the connection that we're working on
-     * @param state
-     *            the state that the connection will show while we're processing
-     *            this step
+     * @param connection the connection that we're working on
+     * @param state the state that the connection will show while we're processing this step
      */
     ConnectionFlowStep(ProxyConnection connection,
             ConnectionState state) {
@@ -36,8 +33,7 @@ abstract class ConnectionFlowStep {
     }
 
     /**
-     * Indicates whether or not to suppress the initial request. Defaults to
-     * false, can be overridden.
+     * Indicates whether or not to suppress the initial request. Defaults to false, can be overridden.
      * 
      * @return
      */
@@ -47,13 +43,13 @@ abstract class ConnectionFlowStep {
 
     /**
      * <p>
-     * Indicates whether or not this step should be executed on the channel's
-     * event loop. Defaults to true, can be overridden.
+     * Indicates whether or not this step should be executed on the channel's event loop. Defaults to true, can be
+     * overridden.
      * </p>
      * 
      * <p>
-     * If this step modifies the pipeline, for example by adding/removing
-     * handlers, it's best to make it execute on the event loop.
+     * If this step modifies the pipeline, for example by adding/removing handlers, it's best to make it execute on the
+     * event loop.
      * </p>
      * 
      * 
@@ -64,18 +60,16 @@ abstract class ConnectionFlowStep {
     }
 
     /**
-     * Implement this method to actually do the work involved in this step of
-     * the flow.
+     * Implement this method to actually do the work involved in this step of the flow.
      * 
      * @return
      */
     protected abstract Future execute();
 
     /**
-     * When the flow determines that this step was successful, it calls into
-     * this method. The default implementation simply continues with the flow.
-     * Other implementations may choose to not continue and instead wait for a
-     * message or something like that.
+     * When the flow determines that this step was successful, it calls into this method. The default implementation
+     * simply continues with the flow. Other implementations may choose to not continue and instead wait for a message
+     * or something like that.
      * 
      * @param flow
      */
@@ -85,24 +79,20 @@ abstract class ConnectionFlowStep {
 
     /**
      * <p>
-     * Any messages that are read from the underlying connection while we're at
-     * this step of the connection flow are passed to this method.
+     * Any messages that are read from the underlying connection while we're at this step of the connection flow are
+     * passed to this method.
      * </p>
      * 
      * <p>
-     * The default implementation ignores the message and logs this, since we
-     * weren't really expecting a message here.
+     * The default implementation ignores the message and logs this, since we weren't really expecting a message here.
      * </p>
      * 
      * <p>
-     * Some {@link ConnectionFlowStep}s do need to read the messages, so they
-     * override this method as appropriate.
+     * Some {@link ConnectionFlowStep}s do need to read the messages, so they override this method as appropriate.
      * </p>
      * 
-     * @param flow
-     *            our {@link ConnectionFlow}
-     * @param msg
-     *            the message read from the underlying connection
+     * @param flow our {@link ConnectionFlow}
+     * @param msg the message read from the underlying connection
      */
     void read(ConnectionFlow flow, Object msg) {
         LOG.debug("Received message while in the middle of connecting: {}", msg);
