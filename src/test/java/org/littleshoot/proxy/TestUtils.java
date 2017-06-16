@@ -19,8 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.management.UnixOperatingSystemMXBean;
-
 import org.apache.http.HttpHost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.params.ConnRoutePNames;
@@ -36,15 +34,16 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.ssl.SslSocketConnector;
 import org.littleshoot.proxy.extras.SelfSignedSslEngineSource;
 
+import com.sun.management.UnixOperatingSystemMXBean;
+
 public class TestUtils {
 
     private TestUtils() {
     }
 
     /**
-     * Creates and starts an embedded web server on a JVM-assigned HTTP ports.
-     * Each response has a body that indicates how many bytes were received with
-     * a message like "Received x bytes\n".
+     * Creates and starts an embedded web server on a JVM-assigned HTTP ports. Each response has a body that indicates
+     * how many bytes were received with a message like "Received x bytes\n".
      * 
      * @return Instance of Server
      */
@@ -53,9 +52,8 @@ public class TestUtils {
     }
 
     /**
-     * Creates and starts an embedded web server on a JVM-assigned HTTP ports.
-     * Creates and starts embedded web server that is running on given port.
-     * Each response has a body that contains the specified contents.
+     * Creates and starts an embedded web server on a JVM-assigned HTTP ports. Creates and starts embedded web server
+     * that is running on given port. Each response has a body that contains the specified contents.
      *
      * @return Instance of Server
      */
@@ -64,9 +62,8 @@ public class TestUtils {
     }
 
     /**
-     * Creates and starts an embedded web server on JVM-assigned HTTP and HTTPS ports.
-     * Each response has a body that indicates how many bytes were received with a message like
-     * "Received x bytes\n".
+     * Creates and starts an embedded web server on JVM-assigned HTTP and HTTPS ports. Each response has a body that
+     * indicates how many bytes were received with a message like "Received x bytes\n".
      *
      * @param enableHttps if true, an HTTPS connector will be added to the web server
      * @return Instance of Server
@@ -75,6 +72,7 @@ public class TestUtils {
         final Server httpServer = new Server(0);
 
         httpServer.setHandler(new AbstractHandler() {
+            @Override
             public void handle(String target, Request baseRequest,
                     HttpServletRequest request, HttpServletResponse response)
                     throws IOException, ServletException {
@@ -86,7 +84,7 @@ public class TestUtils {
                         System.out.println("Stopped hanging due to interruption");
                     }
                 }
-                
+
                 long numberOfBytesRead = 0;
                 InputStream in = new BufferedInputStream(request
                         .getInputStream());
@@ -100,6 +98,66 @@ public class TestUtils {
                 byte[] content = ("Received " + numberOfBytesRead + " bytes\n").getBytes();
                 response.addHeader("Content-Length", Integer.toString(content.length));
                 response.getOutputStream().write(content);
+            }
+
+            @Override
+            public void addLifeCycleListener(Listener arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public boolean isFailed() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isRunning() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isStarted() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isStarting() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isStopped() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isStopping() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public void removeLifeCycleListener(Listener arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void start() throws Exception {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void stop() throws Exception {
+                // TODO Auto-generated method stub
+
             }
         });
         if (enableHttps) {
@@ -140,8 +198,8 @@ public class TestUtils {
     }
 
     /**
-     * Creates and starts an embedded web server on JVM-assigned HTTP and HTTPS ports.
-     * Each response has a body that contains the specified contents.
+     * Creates and starts an embedded web server on JVM-assigned HTTP and HTTPS ports. Each response has a body that
+     * contains the specified contents.
      *
      * @param enableHttps if true, an HTTPS connector will be added to the web server
      * @param content The response the server will return
@@ -150,8 +208,9 @@ public class TestUtils {
     public static Server startWebServerWithResponse(boolean enableHttps, final byte[] content) {
         final Server httpServer = new Server(0);
         httpServer.setHandler(new AbstractHandler() {
+            @Override
             public void handle(String target, Request baseRequest,
-                               HttpServletRequest request, HttpServletResponse response)
+                    HttpServletRequest request, HttpServletResponse response)
                     throws IOException, ServletException {
                 if (request.getRequestURI().contains("hang")) {
                     System.out.println("Hanging as requested");
@@ -175,6 +234,66 @@ public class TestUtils {
 
                 response.addHeader("Content-Length", Integer.toString(content.length));
                 response.getOutputStream().write(content);
+            }
+
+            @Override
+            public void addLifeCycleListener(Listener arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public boolean isFailed() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isRunning() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isStarted() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isStarting() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isStopped() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean isStopping() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public void removeLifeCycleListener(Listener arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void start() throws Exception {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void stop() throws Exception {
+                // TODO Auto-generated method stub
+
             }
         });
         if (enableHttps) {
@@ -247,11 +366,10 @@ public class TestUtils {
     }
 
     /**
-     * Creates instance HttpClient that is configured to use proxy server. The
-     * proxy server should run on 127.0.0.1 and given port
+     * Creates instance HttpClient that is configured to use proxy server. The proxy server should run on 127.0.0.1 and
+     * given port
      * 
-     * @param port
-     *            the proxy port
+     * @param port the proxy port
      * @return instance of HttpClient
      */
     public static HttpClient createProxiedHttpClient(final int port)
@@ -260,14 +378,11 @@ public class TestUtils {
     }
 
     /**
-     * Creates instance HttpClient that is configured to use proxy server. The
-     * proxy server should run on 127.0.0.1 and given port
+     * Creates instance HttpClient that is configured to use proxy server. The proxy server should run on 127.0.0.1 and
+     * given port
      * 
-     * @param port
-     *            the proxy port
-     * @param supportSSL
-     *            if true, client will support SSL connections to servers using
-     *            self-signed certificates
+     * @param port the proxy port
+     * @param supportSSL if true, client will support SSL connections to servers using self-signed certificates
      * @return instance of HttpClient
      */
     public static HttpClient createProxiedHttpClient(final int port,
@@ -282,22 +397,22 @@ public class TestUtils {
             SSLSocketFactory sf = new SSLSocketFactory(
                     new TrustSelfSignedStrategy(),
                     new X509HostnameVerifier() {
-                public boolean verify(String arg0, SSLSession arg1) {
-                    return true;
-                }
+                        public boolean verify(String arg0, SSLSession arg1) {
+                            return true;
+                        }
 
-                public void verify(String host, String[] cns,
-                        String[] subjectAlts) throws SSLException {
-                }
+                        public void verify(String host, String[] cns,
+                                String[] subjectAlts) throws SSLException {
+                        }
 
-                public void verify(String host, X509Certificate cert)
-                        throws SSLException {
-                }
+                        public void verify(String host, X509Certificate cert)
+                                throws SSLException {
+                        }
 
-                public void verify(String host, SSLSocket ssl)
-                        throws IOException {
-                }
-            });
+                        public void verify(String host, SSLSocket ssl)
+                                throws IOException {
+                        }
+                    });
             Scheme scheme = new Scheme("https", 443, sf);
             httpclient.getConnectionManager().getSchemeRegistry()
                     .register(scheme);
@@ -346,7 +461,7 @@ public class TestUtils {
             }
         }
     }
-    
+
     public static long getOpenFileDescriptorsAndPrintMemoryUsage() {
         // Below courtesy of:
         // http://stackoverflow.com/questions/10999076/programmatically-print-the-heap-usage-that-is-typically-printed-on-jvm-exit-when
@@ -366,14 +481,17 @@ public class TestUtils {
             UnixOperatingSystemMXBean unixOsMxBean = (UnixOperatingSystemMXBean) osMxBean;
             return unixOsMxBean.getOpenFileDescriptorCount();
         } else {
-            throw new UnsupportedOperationException("Unable to determine number of open file handles on non-Unix system");
+            throw new UnsupportedOperationException(
+                    "Unable to determine number of open file handles on non-Unix system");
         }
     }
 
     /**
-     * Determines if we are running on a Unix-like operating system that exposes a {@link com.sun.management.UnixOperatingSystemMXBean}.
+     * Determines if we are running on a Unix-like operating system that exposes a
+     * {@link com.sun.management.UnixOperatingSystemMXBean}.
      *
-     * @return true if this is a Unix OS and the JVM exposes a {@link com.sun.management.UnixOperatingSystemMXBean}, otherwise false.
+     * @return true if this is a Unix OS and the JVM exposes a {@link com.sun.management.UnixOperatingSystemMXBean},
+     *         otherwise false.
      */
     public static boolean isUnixManagementCapable() {
         OperatingSystemMXBean osMxBean = ManagementFactory.getOperatingSystemMXBean();

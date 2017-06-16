@@ -24,13 +24,13 @@ public class Launcher {
 
     private static final Logger LOG = LoggerFactory.getLogger(Launcher.class);
 
-    private static final String OPTION_DNSSEC = "dnssec";
+    private static final String OPTION_DNSSEC = "dnssec";//Domain Name System Security Extensions (DNSSEC)DNS安全扩展，是由IETF提供的一系列DNS安全认证的机制（可参考RFC2535）
 
     private static final String OPTION_PORT = "port";
 
     private static final String OPTION_HELP = "help";
 
-    private static final String OPTION_MITM = "mitm";
+    private static final String OPTION_MITM = "mitm";//中间人攻击（Man-in-the-MiddleAttack，简称“MITM攻击”）
 
     private static final String OPTION_NIC = "nic";
 

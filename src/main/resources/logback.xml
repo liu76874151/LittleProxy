@@ -3,19 +3,19 @@
 
 	<contextName>proxy server</contextName>
 
-	<property name="logFilePath" value="/apps/logs/proxy"/>
+	<property name="logFilePath" value="/apps/logs/push/"/>
 	<property name="logFileName" value="proxy.log"/>
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>[proxy] %date [%thread] [%-5level] [%logger{30}] &gt;&gt;&gt; %m%n</pattern>
+			<pattern>[proxy] %date [%thread] [%-5level] %class.%method\(%file:%line\) &gt;&gt;&gt; %m%n</pattern>
 		</encoder>
 	</appender>
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${logFilePath}/${logFileName}</File>
 		<encoder>
-			<pattern>[%date] [%thread] [%-5level] [%logger{80}] &gt;&gt;&gt; %m%n</pattern>
+			<pattern>[%date] [%thread] [%-5level] %class.%method\(%file:%line\) &gt;&gt;&gt; %m%n</pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${logFilePath}/${logFileName}.%d{yyyy-MM-dd}
@@ -39,6 +39,7 @@
 	<logger name="httpclient.wire.header" additivity="false" level="ERROR" />
 	<logger name="net.rubyeye.xmemcached" additivity="false" level="ERROR" />
 	<logger name="com.zaxxer.hikari" additivity="false" level="ERROR" />
+	<logger name="io.netty" additivity="false" level="ERROR" />
 
 	<root level="debug">
 		<appender-ref ref="CONSOLE" />

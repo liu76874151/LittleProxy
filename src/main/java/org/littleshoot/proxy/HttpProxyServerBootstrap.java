@@ -82,14 +82,6 @@ public interface HttpProxyServerBootstrap {
     HttpProxyServerBootstrap withAllowLocalOnly(boolean allowLocalOnly);
 
     /**
-     * This method has no effect and will be removed in a future release.
-     * 
-     * @deprecated use {@link #withNetworkInterface(InetSocketAddress)} to avoid listening on all local addresses
-     */
-//    @Deprecated
-//   HttpProxyServerBootstrap withListenOnAllAddresses(boolean listenOnAllAddresses);
-
-    /**
      * <p>
      * Specify an {@link SslEngineSource} to use for encrypting inbound connections. Enabling this will enable SSL
      * client authentication by default (see {@link #withAuthenticateSslClients(boolean)})

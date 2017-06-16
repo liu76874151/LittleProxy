@@ -503,7 +503,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
                         authenticateSslClients,
                         ch.pipeline(),
                         globalTrafficShapingHandler);
-            };
+            }
         };
         switch (transportProtocol) {
             case TCP:
@@ -541,7 +541,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
             throw new RuntimeException(cause);
         }
 
-        this.boundAddress = ((InetSocketAddress) future.channel().localAddress());
+        this.boundAddress = (InetSocketAddress) future.channel().localAddress();
         LOG.info("Proxy started at address: " + this.boundAddress);
 
         Runtime.getRuntime().addShutdownHook(jvmShutdownHook);
@@ -722,14 +722,6 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
             this.allowLocalOnly = allowLocalOnly;
             return this;
         }
-
-//        @Override
-//        @Deprecated
-//        public HttpProxyServerBootstrap withListenOnAllAddresses(boolean listenOnAllAddresses) {
-//            LOG.warn(
-//                    "withListenOnAllAddresses() is deprecated and will be removed in a future release. Use withNetworkInterface().");
-//            return this;
-//        }
 
         @Override
         public HttpProxyServerBootstrap withSslEngineSource(
